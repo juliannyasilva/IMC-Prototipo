@@ -17,73 +17,63 @@
             </div>
         </nav>
         <div class="container text-center">	
-            <div class='row'>
-                <br>
-                <br>
-                <div class='col-md-2'></div>
-                <div class='col-md-8'>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8" style="margin-top: 50px;">
                     <form>
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Altura:</span>
-                            <input name="altura" type="text" class="form-control" placeholder="Exemplo...: 1,73, 1.87" aria-describedby="basic-addon1">
+                            <input name="altura" id="altura" type="text" class="form-control" placeholder="Exemplo...: 1,73, 1.87" aria-describedby="basic-addon1">
                         </div>
                         <br>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">Peso: </span>
-                            <input name="peso" type="text" class="form-control" placeholder="Exemplo...: 86, 45.7" aria-describedby="basic-addon1">
+                            <input name="peso" id="peso" type="text" class="form-control" placeholder="Exemplo...: 86, 45.7" aria-describedby="basic-addon1">
                         </div>
                         <br>
-                        <br>
-                        <div class='text-center'>
-                            <button class="btn btn-default" type="submit" style="background: rgb(148, 72, 167); color: #fff;">Limpar Dados</button>
-                            <a class="waves-effect waves-light btn" onclick="button1()"><button name="calcula" value="Button 1" onclick="calcula" type="button hidden" class="btn btn-default" style="background: rgb(148, 72, 167); color: #fff;">Calcular IMC</button></a>
-                            
-                            <%
-                                if (request.getParameter("calcula") != null) {
+                        <br>    
+                        <button name="limpa" id="limpa" style="background: rgb(148, 72, 167); color: #fff;">Limpar Dados</button>
+                        <button name="calcula" id="calcula" style="background: rgb(148, 72, 167); color: #fff;">Calcular IMC</button>
+                        <%
+                            int altura = Integer.parseInt(request.getParameter("altura"));
+                            out.print(altura);
+                            int peso = Integer.parseInt(request.getParameter("peso"));
+                            out.print(peso);
 
-                                    String alturaStr = request.getParameter("altura");
-                                    String pesoStr = request.getParameter("peso");
+                            if (peso != 0 && altura != 0) {
 
-                                    int altura = alturaStr == null ? 0 : Integer.parseInt(alturaStr);
-                                    int peso = pesoStr == null ? 0 : Integer.parseInt(pesoStr);
+                                int resultado = peso / (altura * altura);
 
-                                    if (peso != 0 && altura != 0) {
+                                if (resultado <= 17) {
+                                    out.print("IMC = " + resultado + " --> Muito abaixo do peso");
 
-                                        int resultado = peso / (altura * altura);
+                                } else if (resultado > 17 && resultado <= 18.49) {
+                                    out.print("IMC = " + resultado + " --> Muito abaixo do peso");
 
-                                        if (resultado <= 17) {
-                                            out.print("IMC = " + resultado + "--> Muito abaixo do peso");
+                                } else if (resultado >= 18.5 && resultado <= 24.99) {
+                                    out.print("IMC = " + resultado + " --> Peso normal");
 
-                                        } else if (resultado > 17 && resultado <= 18.49) {
-                                            out.print("IMC = " + resultado + "--> Muito abaixo do peso");
+                                } else if (resultado >= 25 && resultado <= 29.99) {
+                                    out.print("IMC = " + resultado + " --> Acima do peso");
 
-                                        } else if (resultado >= 18.5 && resultado <= 24.99) {
-                                            out.print("IMC = " + resultado + "--> Peso normal");
+                                } else if (resultado >= 30 && resultado <= 34.99) {
+                                    out.print("IMC = " + resultado + " --> Obesidade I");
 
-                                        } else if (resultado >= 25 && resultado <= 29.99) {
-                                            out.print("IMC = " + resultado + "--> Acima do peso");
+                                } else if (resultado >= 35 && resultado <= 39.99) {
+                                    out.print("IMC= " + resultado + " --> nObesidade II - severa");
 
-                                        } else if (resultado >= 30 && resultado <= 34.99) {
-                                            out.print("IMC = " + resultado + "--> Obesidade I");
-
-                                        } else if (resultado >= 35 && resultado <= 39.99) {
-                                            out.print("IMC= " + resultado + "--> nObesidade II - severa");
-
-                                        } else if (resultado >= 40) {
-                                            out.print("IMC= " + resultado + "--> Obesidade III - mÃ³rbida");
-                                        }
-                                    } else {
-                                        out.print("Existem campos em branco");
-                                    }
+                                } else if (resultado >= 40) {
+                                    out.print("IMC= " + resultado + " --> Obesidade III - mÃ³rbida");
                                 }
-                            %>												
-                        </div>
+                            } else {
+                                out.print("Existem campos em branco");
+                            }
+                        %>	
                     </form>
                 </div>
-                <div class='col-md-2'></div>
+                <div class="col-md-2"></div>
             </div>
-        </div>	
-        <div class='container text-right'><h6>By: Julianny Alves</h6></div>
+        </div>
     </body>
 </html>
